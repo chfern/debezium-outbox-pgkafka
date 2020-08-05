@@ -1,1 +1,0 @@
-/Users/fernandochristyanto/Workspaces/projects/project-chitchat/user-service/app/build/classes/kotlin/main/com/chitchat/userservice/UserServiceApplication.class:/Users/fernandochristyanto/Workspaces/projects/project-chitchat/user-service/app/build/classes/kotlin/main/com/chitchat/userservice/UserServiceApplicationKt.class

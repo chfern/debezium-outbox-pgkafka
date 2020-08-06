@@ -39,13 +39,11 @@ object LibNames {
     const val springboot_devtools = "org.springframework.boot:spring-boot-devtools"
     const val springbootstarter_test= "org.springframework.boot:spring-boot-starter-test"
     const val springsecurity_test= "org.springframework.security:spring-security-test"
-    const val spring_context = "org.springframework:spring-context"
 
     const val jackson_module_kotlin = "com.fasterxml.jackson.module:jackson-module-kotlin"
 
     const val flyway_core = "org.flywaydb:flyway-core"
     const val postgresql = "org.postgresql:postgresql"
-    const val hibernate_core = "org.hibernate:hibernate-core"
 
     const val spring_kafka = "org.springframework.kafka:spring-kafka"
 
@@ -61,12 +59,10 @@ object Libs {
     const val springbootstarter_security = "${LibNames.springbootstarter_security}:${LibVersion.springbootstarter_security}"
     const val springbootstarter_web = "${LibNames.springbootstarter_web}:${LibVersion.springbootstarter_web}"
     const val springbootstarter_data_jpa = "${LibNames.springbootstarter_data_jpa}:${LibVersion.springbootstarter_data_jpa}"
-    const val spring_context = "${LibNames.spring_context}:${LibVersion.spring_context}"
 
     const val jackson_module_kotlin = "${LibNames.jackson_module_kotlin}:${LibVersion.jackson_module_kotlin}"
 
     const val flyway_core = "${LibNames.flyway_core}:${LibVersion.flyway_core}"
-    const val hibernate_core = "${LibNames.hibernate_core}:${LibVersion.hibernate_core}"
 
     const val spring_kafka = "${LibNames.spring_kafka}:${LibVersion.spring_kafka}"
 

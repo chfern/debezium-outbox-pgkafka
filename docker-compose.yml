@@ -1,6 +1,6 @@
 version: "3"
 services:
-  db:
+  todo_postgres:
     image: "postgres:11"
     container_name: "db"
     restart: always
@@ -12,13 +12,17 @@ services:
     - POSTGRES_PASSWORD=AAAaaa123!@#
     - POSTGRES_USER=postgres
     - POSTGRES_DB=todo_db
-  app:
+  todo_app:
     build:
       context: ./todo-service
       dockerfile: Dockerfile
     ports:
     - 8080:8080
     depends_on:
-    - db
+    - todo_postgres
+    environment:
+    - spring.datasource.url=jdbc:postgresql://todo_postgres:5432/todo_db
+    - spring.datasource.username=postgres
+    - spring.datasource.password=AAAaaa123!@#
 # volumes:
   # data:

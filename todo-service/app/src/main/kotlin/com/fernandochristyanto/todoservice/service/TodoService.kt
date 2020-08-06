@@ -27,7 +27,8 @@ class TodoService(private val todoRepository: TodoRepository,
         val insertedTodo = todoRepository.save(newTodo)
 
         val todoCreatedEvent = with(insertedTodo) { TodoCreatedEvent(id!!, taskName) }
-        val newOutbox = Outbox.createNewOutbox(objectMapper.writeValueAsString(todoCreatedEvent))
+        val newOutbox = Outbox.createNewOutbox(
+                objectMapper.writeValueAsString(todoCreatedEvent), TodoCreatedEvent::class.java.simpleName)
         outboxRepository.save(newOutbox)
 
         return with(insertedTodo) { TodoDTO(id!!, taskName, completed) }
@@ -40,7 +41,8 @@ class TodoService(private val todoRepository: TodoRepository,
         todoRepository.delete(todoToBeDeleted)
 
         val todoDeletedEvent = TodoDeletedEvent(id)
-        val newOutbox = Outbox.createNewOutbox(objectMapper.writeValueAsString(todoDeletedEvent))
+        val newOutbox = Outbox.createNewOutbox(
+                objectMapper.writeValueAsString(todoDeletedEvent), TodoDeletedEvent::class.java.simpleName)
         outboxRepository.save(newOutbox)
     }
 }

@@ -8,9 +8,10 @@ import javax.persistence.Id
 data class Outbox(
         @Id
         val id: String,
-        val payload: String
+        val payload: String,
+        val type: String
 ) {
     companion object {
-        fun createNewOutbox(payload: String): Outbox = Outbox(UUID.randomUUID().toString(), payload = payload)
+        fun createNewOutbox(payload: String, type: String): Outbox = Outbox(UUID.randomUUID().toString(), payload, type)
     }
 }

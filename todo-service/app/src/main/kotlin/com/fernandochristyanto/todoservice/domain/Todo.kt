@@ -7,10 +7,14 @@ import javax.persistence.Id
 
 
 @Entity
-data class Todo (
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?,
-    val taskName: String,
-    val completed: Boolean = false
-)
+data class Todo(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Long?,
+        val taskName: String,
+        val completed: Boolean = false
+) {
+    companion object {
+        fun createNewTodo(taskName: String) = Todo(null, taskName, false)
+    }
+}

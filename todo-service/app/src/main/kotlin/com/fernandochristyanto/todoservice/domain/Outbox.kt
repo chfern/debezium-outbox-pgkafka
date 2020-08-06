@@ -7,6 +7,10 @@ import javax.persistence.Id
 @Entity
 data class Outbox(
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        val id: String,
         val payload: String
-)
+) {
+    companion object {
+        fun createNewOutbox(payload: String): Outbox = Outbox(UUID.randomUUID().toString(), payload = payload)
+    }
+}

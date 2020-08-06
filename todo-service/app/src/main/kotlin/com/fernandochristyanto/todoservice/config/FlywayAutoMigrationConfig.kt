@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct
 import javax.sql.DataSource
 
 @Configuration
-class FlywayAutoMigrationConfig(val dataSource: DataSource) {
+class FlywayAutoMigrationConfig(private val dataSource: DataSource) {
     @PostConstruct
     fun flywayMigrate() {
         val logger: Logger = LoggerFactory.getLogger(FlywayAutoMigrationConfig::class.java)

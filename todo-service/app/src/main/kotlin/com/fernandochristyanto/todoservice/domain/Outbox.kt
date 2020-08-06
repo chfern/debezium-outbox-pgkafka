@@ -8,5 +8,5 @@ import javax.persistence.Id
 data class Outbox(
         @Id
         val id: String = UUID.randomUUID().toString(),
-        val payload: Any
+        val payload: String
 )

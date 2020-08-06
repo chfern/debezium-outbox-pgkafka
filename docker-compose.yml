@@ -2,7 +2,7 @@ version: "3"
 services:
   todo_postgres:
     image: "postgres:11"
-    container_name: "db"
+    container_name: "todo_postgres"
     restart: always
     ports:
     - 5432:5432
@@ -13,6 +13,7 @@ services:
     - POSTGRES_USER=postgres
     - POSTGRES_DB=todo_db
   todo_app:
+    container_name: "todo_app"
     build:
       context: ./todo-service
       dockerfile: Dockerfile

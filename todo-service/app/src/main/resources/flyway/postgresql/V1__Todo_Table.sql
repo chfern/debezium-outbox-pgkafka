@@ -1,4 +1,4 @@
-create table todos (
+create table todo (
     id bigserial not null,
     task_name varchar(255),
     completed boolean,

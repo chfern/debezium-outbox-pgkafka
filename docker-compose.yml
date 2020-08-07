@@ -1,29 +1,65 @@
 version: "3"
 services:
+  ######################################################################
+  # todo service
+  ######################################################################
   todo_postgres:
-    image: "postgres:11"
     container_name: "todo_postgres"
-    restart: always
+    build:
+      context: ./todo-db
+      dockerfile: Dockerfile
     ports:
-    - 5432:5432
-    # volumes:
-    # - data:/var/lib/postgresql/data
+      - 5432:5432
     environment:
-    - POSTGRES_PASSWORD=AAAaaa123!@#
-    - POSTGRES_USER=postgres
-    - POSTGRES_DB=todo_db
+      - POSTGRES_PASSWORD=AAAaaa123!@#
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=todo_db
+    # volumes:
+      # - ./todo-db/postgresql.conf:/etc/postgresql.conf
   todo_app:
     container_name: "todo_app"
     build:
       context: ./todo-service
       dockerfile: Dockerfile
     ports:
-    - 8080:8080
+      - 8080:8080
     depends_on:
-    - todo_postgres
+      - todo_postgres
     environment:
-    - spring.datasource.url=jdbc:postgresql://todo_postgres:5432/todo_db
-    - spring.datasource.username=postgres
-    - spring.datasource.password=AAAaaa123!@#
-# volumes:
-  # data:
+      - spring.datasource.url=jdbc:postgresql://todo_postgres:5432/todo_db
+      - spring.datasource.username=postgres
+      - spring.datasource.password=AAAaaa123!@#
+  ######################################################################
+  # event store
+  ######################################################################
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=192.168.99.3 # host docker ip
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+  ######################################################################
+  # cdc
+  ######################################################################
+  debezium_pg_connect:
+    image: debezium/connect:1.2
+    ports:
+      - 8083:8083
+    links:
+      - kafka
+      - todo_postgres
+    depends_on:
+      - todo_postgres
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses

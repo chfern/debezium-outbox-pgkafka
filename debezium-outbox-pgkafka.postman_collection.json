@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "a823e7c5-0904-43b6-96a4-b70a5a5c8fd9",
+		"name": "debezium-outbox-pgkafka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "Get Todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/todos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Todo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taskName\": \"Cook\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/todos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Todo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/todos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"todos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Kafka Connector Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"outbox-connector\",\n    \"config\": {\n        \"connector.class\" : \"io.debezium.connector.postgresql.PostgresConnector\",\n        \"tasks.max\" : \"1\",\n        \"database.hostname\" : \"todo_postgres\",\n        \"database.port\" : \"5432\",\n        \"database.user\" : \"postgres\",\n        \"database.password\" : \"AAAaaa123!@#\",\n        \"database.dbname\" : \"todo_db\",\n        \"database.server.name\" : \"tododbserver\",\n        \"schema.whitelist\" : \"public\",\n        \"table.whitelist\" : \"public.outbox\",\n        \"tombstones.on.delete\" : \"false\",\n        \"plugin.name\": \"pgoutput\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8083/connectors",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

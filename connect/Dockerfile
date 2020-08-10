@@ -1,4 +1,4 @@
-FROM fernandochristyanto/connect-base:1.2
+FROM fernandochristyanto/debezium-connect-base:1.2
 
 LABEL maintainer="Debezium Community"
 

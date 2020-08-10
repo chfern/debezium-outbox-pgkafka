@@ -15,7 +15,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=todo_db
     # volumes:
-      # - ./todo-db/postgresql.conf:/etc/postgresql.conf
+    # - ./todo-db/postgresql.conf:/etc/postgresql.conf
   todo_app:
     container_name: "todo_app"
     build:
@@ -48,7 +48,9 @@ services:
   # cdc
   ######################################################################
   debezium_pg_connect:
-    image: debezium/connect:1.2
+    build:
+      context: ./connect
+      dockerfile: Dockerfile
     ports:
       - 8083:8083
     links:
@@ -58,8 +60,11 @@ services:
       - todo_postgres
       - kafka
     environment:
+      # - CONNECT_PLUGIN_PATH=/usr/share/java
       - BOOTSTRAP_SERVERS=kafka:9092
       - GROUP_ID=1
       - CONFIG_STORAGE_TOPIC=my_connect_configs
       - OFFSET_STORAGE_TOPIC=my_connect_offsets
       - STATUS_STORAGE_TOPIC=my_connect_statuses
+    volumes:
+      - ./connect/groovy-3.0.5.jar:/kafka/libs/groovy-3.0.5.jar

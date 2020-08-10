@@ -48,7 +48,9 @@ services:
   # cdc
   ######################################################################
   debezium_pg_connect:
-    image: debezium/connect:1.2
+    build:
+      context: ./connect
+      dockerfile: Dockerfile
     ports:
       - 8083:8083
     links:

@@ -12,7 +12,7 @@ This project assumes you have the following installed on your machine:
 
 ### Transactional outbox pattern
 Using:
-* **Spring boot** -- app framework
+* **Spring boot & Flyway** -- app framework & DB migration
 * **Postgresql 11** -- database
 * **Debezium Kafka Connect & Postgresql connector** -- debezium wrapped kafka connect
 * **Zookeeper**
